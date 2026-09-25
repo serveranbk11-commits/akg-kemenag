@@ -66,6 +66,7 @@
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.5); }
 
+        /* Z-Index Hierarchy Wajib */
         #app-screen { z-index: 10; display: none; }
         #login-screen { z-index: 50; }
         .modal-overlay { z-index: 1000; }
@@ -76,22 +77,18 @@
             width: 800px;
             height: 450px;
             position: relative;
-            background-color: #ffffff;
-            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            background-color: #f8fafc;
+            background-image: 
+                linear-gradient(to right, rgba(22, 101, 52, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(22, 101, 52, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
             color: #1f2937;
             border: 8px solid #166534; 
             box-sizing: border-box;
             box-shadow: inset 0 0 0 2px #facc15; 
             overflow: hidden;
-        }
-
-        #kartu-template::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            opacity: 0.05;
-            pointer-events: none;
-            background-image: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M20 20.5V18H0v-2h20v-2H0v-2h20v-2H0V8h20V6H0V4h20V2H0V0h22v20h18v2H22v18H20V20.5z" fill="%23166534" fill-rule="evenodd"/></svg>');
+            /* Pastikan font seragam dan aman */
+            font-family: Arial, Helvetica, sans-serif;
         }
 
         .kop-surat-bg {
@@ -181,6 +178,7 @@
 
     <div id="app-screen" class="min-h-screen flex flex-col md:flex-row">
         
+        <!-- Sidebar -->
         <aside class="glass w-full md:w-64 flex-shrink-0 md:min-h-screen p-5 flex flex-col border-r border-white/10">
             <div class="flex items-center gap-3 mb-8 pb-4 border-b border-white/20">
                 <img id="sidebar-logo" src="./logo.png" onerror="this.src='https://placehold.co/100x100/166534/FFFFFF?text=Kemenag'" class="h-10 w-10 object-contain">
@@ -206,6 +204,7 @@
             </div>
         </aside>
 
+        <!-- Area Konten Utama -->
         <main class="flex-1 p-4 md:p-8 overflow-y-auto relative">
             
             <div id="tab-peserta" class="glass-card p-6 min-h-full block">
@@ -359,6 +358,7 @@
                         <img id="f_foto_preview" src="" class="w-16 h-20 object-cover bg-gray-800 rounded border border-gray-600 hidden">
                         <div class="flex-1">
                             <input type="file" id="f_foto" accept="image/*" class="glass-input w-full p-2 rounded-lg text-sm" onchange="previewUploadFoto(this)">
+                            <p class="text-xs mt-1 text-green-200">*Disarankan foto resmi rasio 3x4 atau 4x6.</p>
                         </div>
                     </div>
                 </div>
@@ -388,7 +388,7 @@
 
             <div id="card-export-area" class="w-full overflow-x-auto flex justify-center bg-black/40 p-6 rounded-b-xl border border-white/20">
                 
-                <!-- TEMPLATE KARTU FIXED (DENGAN LAYOUT BARU) -->
+                <!-- TEMPLATE KARTU FIXED (DENGAN LAYOUT BARU YANG TAHAN BUG HTML2CANVAS) -->
                 <div id="kartu-template">
                     
                     <div class="kop-surat-bg">
@@ -407,48 +407,49 @@
                         </div>
                     </div>
 
-                    <div style="display: flex; height: 334px; padding: 20px; box-sizing: border-box; position: relative; z-index: 10;">
+                    <div style="display: flex; height: 334px; padding: 25px; box-sizing: border-box; position: relative; z-index: 10;">
                         
-                        <!-- Kiri: Biodata + Kredensial Menyatu -->
+                        <!-- Kiri: Biodata & Kredensial Menyatu dalam Tabel Biasa -->
                         <div style="flex: 1; padding-right: 20px; display: flex; flex-direction: column;">
-                            <table class="w-full text-[15px] font-bold text-green-900 border-separate" style="border-spacing: 0 0.4rem;">
+                            <!-- Menggunakan tabel statis tanpa margin otomatis yang aneh agar html2canvas merender dengan lurus -->
+                            <table class="w-full text-[15px] text-green-900 border-separate" style="border-spacing: 0 0.8rem;">
                                 <tbody>
                                     <tr>
-                                        <td class="w-36 text-gray-700">Nama Peserta</td><td class="w-4 text-gray-500">:</td>
-                                        <td id="c_nama" class="uppercase text-lg text-green-800 tracking-wide border-b border-green-200 pb-1"></td>
+                                        <td class="w-36 font-bold text-gray-700">Nama Peserta</td><td class="w-4 text-gray-500 font-bold">:</td>
+                                        <td id="c_nama" class="uppercase text-lg font-bold text-green-800 tracking-wide border-b border-green-200 pb-1"></td>
                                     </tr>
                                     <tr>
-                                        <td class="text-gray-700">Asal Madrasah</td><td class="text-gray-500">:</td>
-                                        <td id="c_madrasah" class="border-b border-green-200 pb-1"></td>
+                                        <td class="font-bold text-gray-700">Asal Madrasah</td><td class="text-gray-500 font-bold">:</td>
+                                        <td id="c_madrasah" class="font-bold border-b border-green-200 pb-1"></td>
                                     </tr>
                                     <tr>
-                                        <td class="text-gray-700">Mata Pelajaran</td><td class="text-gray-500">:</td>
-                                        <td id="c_mapel" class="border-b border-green-200 pb-1"></td>
+                                        <td class="font-bold text-gray-700">Mata Pelajaran</td><td class="text-gray-500 font-bold">:</td>
+                                        <td id="c_mapel" class="font-bold border-b border-green-200 pb-1"></td>
                                     </tr>
                                     <tr>
-                                        <td class="text-gray-700">Tanggal AKG</td><td class="text-gray-500">:</td>
-                                        <td id="c_tanggal" class="border-b border-green-200 pb-1"></td>
+                                        <td class="font-bold text-gray-700">Tanggal AKG</td><td class="text-gray-500 font-bold">:</td>
+                                        <td id="c_tanggal" class="font-bold border-b border-green-200 pb-1"></td>
                                     </tr>
                                     <tr>
-                                        <td class="text-gray-700">Sesi / Jam</td><td class="text-gray-500">:</td>
-                                        <td class="border-b border-green-200 pb-1"><span id="c_sesi"></span> <span class="mx-1 text-gray-400">|</span> <span id="c_jam" class="text-blue-700"></span></td>
+                                        <td class="font-bold text-gray-700">Sesi / Jam</td><td class="text-gray-500 font-bold">:</td>
+                                        <td class="font-bold border-b border-green-200 pb-1"><span id="c_sesi"></span> <span class="mx-1 text-gray-400">|</span> <span id="c_jam" class="text-blue-700"></span></td>
                                     </tr>
                                     
-                                    <!-- Spacer -->
-                                    <tr><td colspan="3" class="pt-3"></td></tr>
+                                    <!-- Spacer (Jarak) -->
+                                    <tr><td colspan="3" class="pt-2"></td></tr>
                                     
-                                    <!-- Kredensial Terintegrasi (Tanpa Kotak) -->
+                                    <!-- Kredensial Terintegrasi (Tanpa Kotak, Aman untuk HTML2Canvas) -->
                                     <tr>
-                                        <td class="text-red-600 font-extrabold text-[13px] uppercase tracking-wide"><i class="fas fa-user-lock mr-1"></i> Username Ujian</td>
-                                        <td class="text-red-500 font-bold">:</td>
-                                        <td class="border-b border-red-200 pb-1">
+                                        <td class="text-red-600 font-extrabold text-[14px] uppercase tracking-wide whitespace-nowrap"><i class="fas fa-user-lock mr-1 text-[12px]"></i> Username</td>
+                                        <td class="text-gray-500 font-bold">:</td>
+                                        <td class="border-b border-green-200 pb-1">
                                             <span id="c_user" class="font-mono text-lg font-bold text-gray-900 tracking-wider"></span>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="text-red-600 font-extrabold text-[13px] uppercase tracking-wide"><i class="fas fa-key mr-1"></i> Password Ujian</td>
-                                        <td class="text-red-500 font-bold">:</td>
-                                        <td class="border-b border-red-200 pb-1">
+                                        <td class="text-red-600 font-extrabold text-[14px] uppercase tracking-wide whitespace-nowrap"><i class="fas fa-key mr-1 text-[12px]"></i> Password</td>
+                                        <td class="text-gray-500 font-bold">:</td>
+                                        <td class="border-b border-green-200 pb-1">
                                             <span id="c_pass" class="font-mono text-lg font-bold text-gray-900 tracking-wider"></span>
                                         </td>
                                     </tr>
@@ -456,17 +457,17 @@
                             </table>
                         </div>
 
-                        <!-- Kanan: Foto & QR Code (Bersih) -->
+                        <!-- Kanan: Foto & QR Code -->
                         <div style="width: 160px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; border-left: 2px solid rgba(134, 239, 172, 0.5); padding-left: 20px; box-sizing: border-box;">
                             
-                            <!-- Foto -->
+                            <!-- Foto Fixed Size -->
                             <div style="width: 110px; height: 150px; border: 3px solid white; background-color: #e5e7eb; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); overflow: hidden; display: flex; justify-content: center; align-items: center; position: relative;">
                                 <img id="c_foto" src="" style="width: 100%; height: 100%; object-fit: cover; display: none;">
                                 <i id="c_foto_icon" class="fas fa-user text-6xl text-gray-400"></i>
                             </div>
                             
-                            <!-- QR Code Tanpa Tulisan Scan Verifikasi -->
-                            <div style="width: 100%; display: flex; flex-direction: column; align-items: center; margin-top: auto; margin-bottom: 5px;">
+                            <!-- QR Code Tanpa Tulisan Scan -->
+                            <div style="width: 100%; display: flex; flex-direction: column; align-items: center; margin-top: auto;">
                                 <div id="qrcode-container" style="background: white; padding: 6px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: 2px solid #166534; width: 104px; height: 104px; display: flex; justify-content: center; align-items: center; box-sizing: border-box;">
                                     <!-- QR rendered here -->
                                 </div>
@@ -495,7 +496,7 @@
     <script>
         /**
          ============================================================
-         WAJIB DIUBAH!
+         WAJIB DIUBAH SEBELUM DEPLOY KE GITHUB PAGES!
          Ganti URL di bawah dengan URL Web App Apps Script Anda.
          ============================================================
         */
@@ -505,15 +506,14 @@
             logoUrl: "./logo.png", logo2Url: "",
             kop1: "Kementerian Agama RI", kop2: "Kartu Peserta Asesmen Kompetensi Guru (AKG)", kop3: "Tahun Pelaksanaan 2026"
         };
-        let pesertaData = [], currentDeleteId = null, currentEditId = null, qrCodeObj = null;
+        let pesertaData = [], currentDeleteId = null, currentEditId = null;
 
-        // Formatter Tanggal (Mengakali ISO Date dari Google Sheets)
+        // Formatter Tanggal
         function formatUntukInput(dateString) {
             if (!dateString) return '';
             try {
                 let d = new Date(dateString);
                 if (isNaN(d.getTime())) return dateString;
-                // Geser ke timezone lokal yang aman
                 let localDate = new Date(d.getTime() - (d.getTimezoneOffset() * 60000));
                 return localDate.toISOString().split('T')[0];
             } catch(e) { return dateString; }
@@ -524,7 +524,6 @@
             try {
                 let d = new Date(dateString);
                 if (isNaN(d.getTime())) return dateString;
-                // Geser ke timezone lokal yang aman
                 let localDate = new Date(d.getTime() - (d.getTimezoneOffset() * 60000));
                 let dd = String(localDate.getDate()).padStart(2, '0');
                 let mm = String(localDate.getMonth() + 1).padStart(2, '0');
@@ -539,7 +538,7 @@
             try {
                 const response = await fetch(APP_SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: action, data: payload }) });
                 return await response.json();
-            } catch (error) { return { success: false, message: 'Gagal terhubung ke server.' }; }
+            } catch (error) { return { success: false, message: 'Gagal terhubung ke server. Periksa URL Apps Script Anda.' }; }
         }
 
         window.onload = function() { checkSession(); };
