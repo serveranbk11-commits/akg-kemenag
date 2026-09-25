@@ -482,16 +482,16 @@
                             </table>
 
                             <!-- Akun Ujian (Fixed layout untuk hindari tabrakan teks) -->
-                            <div style="margin-top: auto; margin-bottom: 5px; background: rgba(255,255,255,0.9); padding: 10px; border-radius: 8px; border: 2px solid #facc15; box-shadow: 0 1px 3px rgba(0,0,0,0.1); display: block; max-width: 400px;">
-                                <p style="font-size: 11px; font-weight: bold; color: #dc2626; margin: 0 0 6px 0; text-transform: uppercase; letter-spacing: 0.05em;"><i class="fas fa-lock"></i> Kredensial Login Ujian (RAHASIA)</p>
+                            <div style="margin-top: auto; margin-bottom: 5px; background: rgba(255,255,255,0.9); padding: 12px; border-radius: 8px; border: 2px solid #facc15; box-shadow: 0 1px 3px rgba(0,0,0,0.1); display: flex; flex-direction: column; max-width: 400px; box-sizing: border-box;">
+                                <div style="font-size: 11px; font-weight: bold; color: #dc2626; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; line-height: 1.2;"><i class="fas fa-lock"></i> Kredensial Login Ujian (RAHASIA)</div>
                                 <div style="display: flex; gap: 15px;">
-                                    <div style="background: #f3f4f6; padding: 4px 10px; border-radius: 4px; border: 1px solid #d1d5db; min-width: 120px;">
-                                        <span style="font-size: 10px; color: #6b7280; display: block;">Username:</span>
-                                        <strong id="c_user" style="font-family: monospace; font-size: 16px; color: #000; display: block; margin-top:2px;"></strong>
+                                    <div style="background: #f3f4f6; padding: 6px 12px; border-radius: 4px; border: 1px solid #d1d5db; min-width: 120px; box-sizing: border-box;">
+                                        <div style="font-size: 10px; color: #6b7280; line-height: 1.2; margin-bottom: 2px;">Username:</div>
+                                        <div id="c_user" style="font-family: monospace; font-size: 16px; font-weight: bold; color: #000; line-height: 1.2;"></div>
                                     </div>
-                                    <div style="background: #f3f4f6; padding: 4px 10px; border-radius: 4px; border: 1px solid #d1d5db; min-width: 100px;">
-                                        <span style="font-size: 10px; color: #6b7280; display: block;">Password:</span>
-                                        <strong id="c_pass" style="font-family: monospace; font-size: 16px; color: #000; display: block; margin-top:2px;"></strong>
+                                    <div style="background: #f3f4f6; padding: 6px 12px; border-radius: 4px; border: 1px solid #d1d5db; min-width: 100px; box-sizing: border-box;">
+                                        <div style="font-size: 10px; color: #6b7280; line-height: 1.2; margin-bottom: 2px;">Password:</div>
+                                        <div id="c_pass" style="font-family: monospace; font-size: 16px; font-weight: bold; color: #000; line-height: 1.2;"></div>
                                     </div>
                                 </div>
                             </div>
@@ -510,9 +510,6 @@
                             <div style="width: 100%; display: flex; flex-direction: column; align-items: center; margin-top: 10px;">
                                 <div id="qrcode-container" style="background: white; padding: 6px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: 2px solid #166534; width: 104px; height: 104px; display: flex; justify-content: center; align-items: center; box-sizing: border-box;">
                                     <!-- QR rendered here -->
-                                </div>
-                                <div style="background: #166534; color: #fde047; font-size: 10px; font-weight: bold; padding: 3px; border-radius: 3px; margin-top: 6px; text-transform: uppercase; width: 104px; text-align: center; letter-spacing: 0.05em; box-sizing: border-box;">
-                                    Scan Verifikasi
                                 </div>
                             </div>
                         </div>
