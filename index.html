@@ -478,6 +478,31 @@
         let currentEditId = null;
         let qrCodeObj = null;
 
+        // --- Helper: Format Tanggal ---
+        function formatUntukInput(dateString) {
+            if (!dateString) return '';
+            try {
+                const d = new Date(dateString);
+                if (isNaN(d.getTime())) return dateString;
+                const yyyy = d.getFullYear();
+                const mm = String(d.getMonth() + 1).padStart(2, '0');
+                const dd = String(d.getDate()).padStart(2, '0');
+                return `${yyyy}-${mm}-${dd}`;
+            } catch(e) { return dateString; }
+        }
+
+        function formatUntukTampil(dateString) {
+            if (!dateString) return '';
+            try {
+                const d = new Date(dateString);
+                if (isNaN(d.getTime())) return dateString;
+                const dd = String(d.getDate()).padStart(2, '0');
+                const mm = String(d.getMonth() + 1).padStart(2, '0');
+                const yyyy = d.getFullYear();
+                return `${dd}-${mm}-${yyyy}`;
+            } catch(e) { return dateString; }
+        }
+
         // --- Core API Caller ---
         async function apiCall(action, payload = {}) {
             const token = sessionStorage.getItem('akg_session_token');
@@ -696,7 +721,7 @@
                     <td class="p-4 border-b border-white/10">${d.mapel}</td>
                     <td class="p-4 border-b border-white/10">
                         <div class="text-xs bg-black/20 p-1.5 rounded inline-block">
-                            <span class="block text-green-200 mb-1"><i class="far fa-calendar-alt"></i> ${d.tanggal}</span>
+                            <span class="block text-green-200 mb-1"><i class="far fa-calendar-alt"></i> ${formatUntukTampil(d.tanggal)}</span>
                             <span class="font-bold text-white"><i class="far fa-clock"></i> ${d.sesi} (${d.jam})</span>
                         </div>
                     </td>
@@ -754,7 +779,7 @@
             document.getElementById('f_madrasah').value = data.madrasah;
             document.getElementById('f_user').value = data.user;
             document.getElementById('f_pass').value = data.pass;
-            document.getElementById('f_tanggal').value = data.tanggal;
+            document.getElementById('f_tanggal').value = formatUntukInput(data.tanggal);
             document.getElementById('f_sesi').value = data.sesi;
             document.getElementById('f_jam').value = data.jam;
             document.getElementById('f_mapel').value = data.mapel;
@@ -865,7 +890,7 @@
             document.getElementById('c_nama').innerText = data.nama;
             document.getElementById('c_madrasah').innerText = data.madrasah;
             document.getElementById('c_mapel').innerText = data.mapel;
-            document.getElementById('c_tanggal').innerText = data.tanggal;
+            document.getElementById('c_tanggal').innerText = formatUntukTampil(data.tanggal);
             document.getElementById('c_sesi').innerText = data.sesi;
             document.getElementById('c_jam').innerText = data.jam;
             document.getElementById('c_user').innerText = data.user;
