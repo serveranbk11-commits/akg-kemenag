@@ -87,7 +87,6 @@
             box-sizing: border-box;
             box-shadow: inset 0 0 0 2px #facc15; 
             overflow: hidden;
-            /* Pastikan font seragam dan aman */
             font-family: Arial, Helvetica, sans-serif;
         }
 
@@ -207,6 +206,7 @@
         <!-- Area Konten Utama -->
         <main class="flex-1 p-4 md:p-8 overflow-y-auto relative">
             
+            <!-- Tab Peserta -->
             <div id="tab-peserta" class="glass-card p-6 min-h-full block">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
                     <div>
@@ -242,6 +242,7 @@
                 </div>
             </div>
 
+            <!-- Tab Pengaturan -->
             <div id="tab-pengaturan" class="glass-card p-6 min-h-full hidden animate-fade-in">
                 <div class="mb-8 border-b border-white/20 pb-4">
                     <h2 class="text-2xl font-bold text-yellow-400">Pengaturan Sistem</h2>
@@ -335,6 +336,7 @@
         </main>
     </div>
 
+    <!-- Modal Form Peserta -->
     <div id="formModal" class="modal-overlay fixed inset-0 bg-black/60 backdrop-blur-sm hidden flex justify-center items-center p-4">
         <div class="glass-card w-full max-w-3xl max-h-[90vh] overflow-y-auto p-6 relative border-t-4 border-yellow-400 shadow-2xl">
             <button onclick="closeFormModal()" class="absolute top-4 right-4 text-gray-300 hover:text-white text-2xl transition"><i class="fas fa-times"></i></button>
@@ -373,6 +375,20 @@
         </div>
     </div>
 
+    <!-- Modal Konfirmasi -->
+    <div id="confirmModal" class="modal-overlay fixed inset-0 bg-black/60 backdrop-blur-sm hidden flex justify-center items-center p-4">
+        <div class="glass-card w-full max-w-sm p-6 text-center border-t-4 border-red-500">
+            <i class="fas fa-exclamation-triangle text-5xl text-red-500 mb-4 animate-bounce"></i>
+            <h3 class="text-xl font-bold mb-2">Konfirmasi Hapus</h3>
+            <p class="text-gray-200 mb-6 text-sm">Apakah Anda yakin ingin menghapus data peserta ini?</p>
+            <div class="flex justify-center gap-3">
+                <button onclick="closeConfirmModal()" class="px-4 py-2 rounded-lg bg-gray-600 hover:bg-gray-700 text-white font-medium transition">Batal</button>
+                <button id="btnConfirmDelete" class="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white font-bold transition shadow-lg">Ya, Hapus</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Kartu & Template Ekspor -->
     <div id="cardModal" class="modal-overlay fixed inset-0 bg-black/80 backdrop-blur-md hidden flex justify-center items-center p-4">
         <div class="w-full max-w-[850px] relative flex flex-col items-center">
             
@@ -388,7 +404,7 @@
 
             <div id="card-export-area" class="w-full overflow-x-auto flex justify-center bg-black/40 p-6 rounded-b-xl border border-white/20">
                 
-                <!-- TEMPLATE KARTU FIXED (DENGAN LAYOUT BARU YANG TAHAN BUG HTML2CANVAS) -->
+                <!-- TEMPLATE KARTU FIXED -->
                 <div id="kartu-template">
                     
                     <div class="kop-surat-bg">
@@ -407,50 +423,56 @@
                         </div>
                     </div>
 
-                    <div style="display: flex; height: 334px; padding: 25px; box-sizing: border-box; position: relative; z-index: 10;">
+                    <div style="display: flex; height: 342px; padding: 25px; box-sizing: border-box; position: relative; z-index: 10;">
                         
-                        <!-- Kiri: Biodata & Kredensial Menyatu dalam Tabel Biasa -->
-                        <div style="flex: 1; padding-right: 20px; display: flex; flex-direction: column;">
-                            <!-- Menggunakan tabel statis tanpa margin otomatis yang aneh agar html2canvas merender dengan lurus -->
-                            <table class="w-full text-[15px] text-green-900 border-separate" style="border-spacing: 0 0.8rem;">
+                        <!-- Kiri: Biodata & Kredensial Menggunakan Inline CSS untuk Presisi Mutlak -->
+                        <div style="flex: 1; padding-right: 20px;">
+                            <table style="width: 100%; font-size: 15px; color: #14532d; border-collapse: collapse;">
                                 <tbody>
                                     <tr>
-                                        <td class="w-36 font-bold text-gray-700">Nama Peserta</td><td class="w-4 text-gray-500 font-bold">:</td>
-                                        <td id="c_nama" class="uppercase text-lg font-bold text-green-800 tracking-wide border-b border-green-200 pb-1"></td>
+                                        <td style="width: 140px; font-weight: bold; color: #374151; padding: 6px 0;">Nama Peserta</td>
+                                        <td style="width: 15px; font-weight: bold; color: #6b7280; padding: 6px 0;">:</td>
+                                        <td style="font-weight: bold; color: #166534; padding: 6px 0; border-bottom: 1px solid #bbf7d0; text-transform: uppercase; font-size: 1.125rem; letter-spacing: 0.025em;" id="c_nama"></td>
                                     </tr>
                                     <tr>
-                                        <td class="font-bold text-gray-700">Asal Madrasah</td><td class="text-gray-500 font-bold">:</td>
-                                        <td id="c_madrasah" class="font-bold border-b border-green-200 pb-1"></td>
+                                        <td style="font-weight: bold; color: #374151; padding: 6px 0;">Asal Madrasah</td>
+                                        <td style="font-weight: bold; color: #6b7280; padding: 6px 0;">:</td>
+                                        <td style="font-weight: bold; padding: 6px 0; border-bottom: 1px solid #bbf7d0;" id="c_madrasah"></td>
                                     </tr>
                                     <tr>
-                                        <td class="font-bold text-gray-700">Mata Pelajaran</td><td class="text-gray-500 font-bold">:</td>
-                                        <td id="c_mapel" class="font-bold border-b border-green-200 pb-1"></td>
+                                        <td style="font-weight: bold; color: #374151; padding: 6px 0;">Mata Pelajaran</td>
+                                        <td style="font-weight: bold; color: #6b7280; padding: 6px 0;">:</td>
+                                        <td style="font-weight: bold; padding: 6px 0; border-bottom: 1px solid #bbf7d0;" id="c_mapel"></td>
                                     </tr>
                                     <tr>
-                                        <td class="font-bold text-gray-700">Tanggal AKG</td><td class="text-gray-500 font-bold">:</td>
-                                        <td id="c_tanggal" class="font-bold border-b border-green-200 pb-1"></td>
+                                        <td style="font-weight: bold; color: #374151; padding: 6px 0;">Tanggal AKG</td>
+                                        <td style="font-weight: bold; color: #6b7280; padding: 6px 0;">:</td>
+                                        <td style="font-weight: bold; padding: 6px 0; border-bottom: 1px solid #bbf7d0;" id="c_tanggal"></td>
                                     </tr>
                                     <tr>
-                                        <td class="font-bold text-gray-700">Sesi / Jam</td><td class="text-gray-500 font-bold">:</td>
-                                        <td class="font-bold border-b border-green-200 pb-1"><span id="c_sesi"></span> <span class="mx-1 text-gray-400">|</span> <span id="c_jam" class="text-blue-700"></span></td>
+                                        <td style="font-weight: bold; color: #374151; padding: 6px 0;">Sesi / Jam</td>
+                                        <td style="font-weight: bold; color: #6b7280; padding: 6px 0;">:</td>
+                                        <td style="font-weight: bold; padding: 6px 0; border-bottom: 1px solid #bbf7d0;">
+                                            <span id="c_sesi"></span> <span style="margin: 0 4px; color: #9ca3af;">|</span> <span id="c_jam" style="color: #1d4ed8;"></span>
+                                        </td>
                                     </tr>
                                     
-                                    <!-- Spacer (Jarak) -->
-                                    <tr><td colspan="3" class="pt-2"></td></tr>
+                                    <!-- Jarak Khusus agar Layout Pas -->
+                                    <tr><td colspan="3" style="height: 12px;"></td></tr>
                                     
-                                    <!-- Kredensial Terintegrasi (Tanpa Kotak, Aman untuk HTML2Canvas) -->
+                                    <!-- Username & Password -->
                                     <tr>
-                                        <td class="text-red-600 font-extrabold text-[14px] uppercase tracking-wide whitespace-nowrap"><i class="fas fa-user-lock mr-1 text-[12px]"></i> Username</td>
-                                        <td class="text-gray-500 font-bold">:</td>
-                                        <td class="border-b border-green-200 pb-1">
-                                            <span id="c_user" class="font-mono text-lg font-bold text-gray-900 tracking-wider"></span>
+                                        <td style="font-weight: 800; color: #dc2626; padding: 6px 0; text-transform: uppercase; font-size: 14px;"><i class="fas fa-user" style="margin-right: 4px; font-size: 12px;"></i> Username</td>
+                                        <td style="font-weight: bold; color: #6b7280; padding: 6px 0;">:</td>
+                                        <td style="padding: 6px 0; border-bottom: 1px solid #bbf7d0;">
+                                            <span id="c_user" style="font-family: monospace; font-size: 1.125rem; font-weight: bold; color: #111827; letter-spacing: 0.05em;"></span>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="text-red-600 font-extrabold text-[14px] uppercase tracking-wide whitespace-nowrap"><i class="fas fa-key mr-1 text-[12px]"></i> Password</td>
-                                        <td class="text-gray-500 font-bold">:</td>
-                                        <td class="border-b border-green-200 pb-1">
-                                            <span id="c_pass" class="font-mono text-lg font-bold text-gray-900 tracking-wider"></span>
+                                        <td style="font-weight: 800; color: #dc2626; padding: 6px 0; text-transform: uppercase; font-size: 14px;"><i class="fas fa-key" style="margin-right: 4px; font-size: 12px;"></i> Password</td>
+                                        <td style="font-weight: bold; color: #6b7280; padding: 6px 0;">:</td>
+                                        <td style="padding: 6px 0; border-bottom: 1px solid #bbf7d0;">
+                                            <span id="c_pass" style="font-family: monospace; font-size: 1.125rem; font-weight: bold; color: #111827; letter-spacing: 0.05em;"></span>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -466,7 +488,7 @@
                                 <i id="c_foto_icon" class="fas fa-user text-6xl text-gray-400"></i>
                             </div>
                             
-                            <!-- QR Code Tanpa Tulisan Scan -->
+                            <!-- QR Code -->
                             <div style="width: 100%; display: flex; flex-direction: column; align-items: center; margin-top: auto;">
                                 <div id="qrcode-container" style="background: white; padding: 6px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: 2px solid #166534; width: 104px; height: 104px; display: flex; justify-content: center; align-items: center; box-sizing: border-box;">
                                     <!-- QR rendered here -->
@@ -477,18 +499,6 @@
 
                     <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 8px; background: linear-gradient(to right, #facc15, #fef08a, #facc15);"></div>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="confirmModal" class="modal-overlay fixed inset-0 bg-black/60 backdrop-blur-sm hidden flex justify-center items-center p-4">
-        <div class="glass-card w-full max-w-sm p-6 text-center border-t-4 border-red-500">
-            <i class="fas fa-exclamation-triangle text-5xl text-red-500 mb-4 animate-bounce"></i>
-            <h3 class="text-xl font-bold mb-2">Konfirmasi Hapus</h3>
-            <p class="text-gray-200 mb-6 text-sm">Apakah Anda yakin ingin menghapus data peserta ini?</p>
-            <div class="flex justify-center gap-3">
-                <button onclick="closeConfirmModal()" class="px-4 py-2 rounded-lg bg-gray-600 hover:bg-gray-700 text-white font-medium transition">Batal</button>
-                <button id="btnConfirmDelete" class="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white font-bold transition shadow-lg">Ya, Hapus</button>
             </div>
         </div>
     </div>
@@ -508,7 +518,7 @@
         };
         let pesertaData = [], currentDeleteId = null, currentEditId = null;
 
-        // Formatter Tanggal
+        // Formatter Tanggal Wajib
         function formatUntukInput(dateString) {
             if (!dateString) return '';
             try {
