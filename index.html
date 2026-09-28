@@ -34,53 +34,31 @@
             z-index: -1;
         }
 
-        .glass {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-        }
-        
-        .glass-card {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            border-radius: 1rem;
-        }
-
-        .glass-input {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            transition: all 0.3s ease;
-        }
-        .glass-input:focus {
-            background: rgba(255, 255, 255, 0.2);
-            outline: none;
-            border-color: #facc15; 
-        }
+        .glass { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); }
+        .glass-card { background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 1rem; }
+        .glass-input { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.3); color: white; transition: all 0.3s ease; }
+        .glass-input:focus { background: rgba(255, 255, 255, 0.2); outline: none; border-color: #facc15; }
 
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.5); }
 
-        /* Z-Index Hierarchy Wajib */
+        /* Z-Index Hierarchy */
         #app-screen { z-index: 10; display: none; }
         #login-screen { z-index: 50; }
         .modal-overlay { z-index: 1000; }
         #toast-container { z-index: 2000; position: fixed; top: 1rem; right: 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
         #loading-overlay { z-index: 9999; display: none; }
-
+        .nav-item.active { background-color: rgba(255, 255, 255, 0.2); border-color: rgba(255, 255, 255, 0.5); font-weight: 600; color: #facc15; }
+        
         #kartu-template {
             width: 800px;
             height: 450px;
             position: relative;
             background-color: #f8fafc;
-            background-image: 
-                linear-gradient(to right, rgba(22, 101, 52, 0.05) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(22, 101, 52, 0.05) 1px, transparent 1px);
+            /* Default Hijau - Akan ditimpa oleh JS saat preview jika tema berbeda */
+            background-image: linear-gradient(to right, rgba(22, 101, 52, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(22, 101, 52, 0.05) 1px, transparent 1px);
             background-size: 20px 20px;
             color: #1f2937;
             border: 8px solid #166534; 
@@ -90,7 +68,7 @@
             font-family: Arial, Helvetica, sans-serif;
         }
 
-        .kop-surat-bg {
+        #c_kop_bg {
             background: linear-gradient(to right, #14532d, #166534, #14532d);
             border-bottom: 4px solid #facc15;
             color: white;
@@ -104,31 +82,11 @@
         }
 
         .kop-logo-box {
-            width: 75px;
-            height: 75px;
-            background-color: white;
-            border-radius: 8px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 2px solid #facc15;
-            box-sizing: border-box;
-            overflow: hidden;
-            flex-shrink: 0;
+            width: 75px; height: 75px; background-color: white; border-radius: 8px;
+            display: flex; justify-content: center; align-items: center;
+            border: 2px solid #facc15; box-sizing: border-box; overflow: hidden; flex-shrink: 0;
         }
-        
-        .kop-logo-box img {
-            max-width: 90%;
-            max-height: 90%;
-            object-fit: contain;
-        }
-
-        .nav-item.active {
-            background-color: rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.5);
-            font-weight: 600;
-            color: #facc15;
-        }
+        .kop-logo-box img { max-width: 90%; max-height: 90%; object-fit: contain; }
     </style>
 </head>
 <body class="text-sm md:text-base">
@@ -153,18 +111,14 @@
                 <div>
                     <label class="block text-sm font-medium text-green-100 mb-1">Username</label>
                     <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i class="fas fa-user text-green-200"></i>
-                        </div>
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><i class="fas fa-user text-green-200"></i></div>
                         <input type="text" id="username" class="glass-input w-full pl-10 pr-3 py-2.5 rounded-lg" placeholder="Masukkan admin" required>
                     </div>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-green-100 mb-1">Password</label>
                     <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i class="fas fa-lock text-green-200"></i>
-                        </div>
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><i class="fas fa-lock text-green-200"></i></div>
                         <input type="password" id="password" class="glass-input w-full pl-10 pr-3 py-2.5 rounded-lg" placeholder="Masukkan password" required>
                     </div>
                 </div>
@@ -181,10 +135,7 @@
         <aside class="glass w-full md:w-64 flex-shrink-0 md:min-h-screen p-5 flex flex-col border-r border-white/10">
             <div class="flex items-center gap-3 mb-8 pb-4 border-b border-white/20">
                 <img id="sidebar-logo" src="./logo.png" onerror="this.src='https://placehold.co/100x100/166534/FFFFFF?text=Kemenag'" class="h-10 w-10 object-contain">
-                <div>
-                    <h2 class="text-lg font-bold leading-tight">Admin AKG</h2>
-                    <p class="text-xs text-yellow-300">Madrasah Kemenag</p>
-                </div>
+                <div><h2 class="text-lg font-bold leading-tight">Admin AKG</h2><p class="text-xs text-yellow-300">Madrasah Kemenag</p></div>
             </div>
             
             <nav class="flex-1 space-y-2">
@@ -203,10 +154,9 @@
             </div>
         </aside>
 
-        <!-- Area Konten Utama -->
+        <!-- Main Content -->
         <main class="flex-1 p-4 md:p-8 overflow-y-auto relative">
             
-            <!-- Tab Peserta -->
             <div id="tab-peserta" class="glass-card p-6 min-h-full block">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
                     <div>
@@ -242,26 +192,30 @@
                 </div>
             </div>
 
-            <!-- Tab Pengaturan -->
             <div id="tab-pengaturan" class="glass-card p-6 min-h-full hidden animate-fade-in">
                 <div class="mb-8 border-b border-white/20 pb-4">
                     <h2 class="text-2xl font-bold text-yellow-400">Pengaturan Sistem</h2>
-                    <p class="text-green-100 text-sm mt-1">Sesuaikan aplikasi, logo, dan teks kop surat.</p>
+                    <p class="text-green-100 text-sm mt-1">Sesuaikan aplikasi, logo, teks kop surat, dan tema.</p>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <!-- Ubah Password -->
+                    <!-- Tema Warna -->
                     <div class="bg-black/20 p-6 rounded-xl border border-white/10 shadow-lg">
                         <h3 class="text-lg font-semibold text-white flex items-center gap-2 mb-4">
-                            <i class="fas fa-key text-yellow-400"></i> Ubah Password Admin
+                            <i class="fas fa-palette text-yellow-400"></i> Tema Warna Kartu
                         </h3>
-                        <form onsubmit="savePassword(event)" class="space-y-4">
+                        <form onsubmit="saveTheme(event)" class="space-y-4">
                             <div>
-                                <label class="block text-sm text-green-100 mb-1">Password Baru</label>
-                                <input type="password" id="new_password" class="glass-input w-full p-2.5 rounded-lg" placeholder="Masukkan password baru" required>
+                                <label class="block text-sm text-green-100 mb-1">Pilih Tema untuk Hasil Cetak Kartu</label>
+                                <select id="set_theme" class="glass-input w-full p-2.5 rounded-lg">
+                                    <option value="hijau" class="text-black">Hijau Kemenag (Default)</option>
+                                    <option value="biru" class="text-black">Biru Edukasi</option>
+                                    <option value="merah" class="text-black">Merah Nasional</option>
+                                    <option value="ungu" class="text-black">Ungu Elegan</option>
+                                </select>
                             </div>
                             <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition shadow w-full md:w-auto">
-                                <i class="fas fa-save mr-1"></i> Simpan Password
+                                <i class="fas fa-save mr-1"></i> Simpan Tema
                             </button>
                         </form>
                     </div>
@@ -272,63 +226,43 @@
                             <i class="fas fa-heading text-yellow-400"></i> Pengaturan Kop Surat
                         </h3>
                         <form onsubmit="saveKop(event)" class="space-y-4">
-                            <div>
-                                <label class="block text-xs text-green-100 mb-1">Teks Baris 1 (Utama)</label>
-                                <input type="text" id="set_kop1" class="glass-input w-full p-2 rounded-lg" required>
-                            </div>
-                            <div>
-                                <label class="block text-xs text-green-100 mb-1">Teks Baris 2 (Sub-judul)</label>
-                                <input type="text" id="set_kop2" class="glass-input w-full p-2 rounded-lg" required>
-                            </div>
-                            <div>
-                                <label class="block text-xs text-green-100 mb-1">Teks Baris 3 (Tahun/Deskripsi)</label>
-                                <input type="text" id="set_kop3" class="glass-input w-full p-2 rounded-lg" required>
-                            </div>
-                            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition shadow w-full md:w-auto">
-                                <i class="fas fa-save mr-1"></i> Simpan Teks Kop
-                            </button>
+                            <div><label class="block text-xs text-green-100 mb-1">Teks Baris 1 (Utama)</label><input type="text" id="set_kop1" class="glass-input w-full p-2 rounded-lg" required></div>
+                            <div><label class="block text-xs text-green-100 mb-1">Teks Baris 2 (Sub-judul)</label><input type="text" id="set_kop2" class="glass-input w-full p-2 rounded-lg" required></div>
+                            <div><label class="block text-xs text-green-100 mb-1">Teks Baris 3 (Tahun/Deskripsi)</label><input type="text" id="set_kop3" class="glass-input w-full p-2 rounded-lg" required></div>
+                            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition shadow w-full md:w-auto"><i class="fas fa-save mr-1"></i> Simpan Teks Kop</button>
                         </form>
                     </div>
 
                     <!-- Upload Logo Kiri -->
                     <div class="bg-black/20 p-6 rounded-xl border border-white/10 shadow-lg">
-                        <h3 class="text-lg font-semibold text-white flex items-center gap-2 mb-4">
-                            <i class="fas fa-image text-yellow-400"></i> Logo Kemenag (Kiri)
-                        </h3>
+                        <h3 class="text-lg font-semibold text-white flex items-center gap-2 mb-4"><i class="fas fa-image text-yellow-400"></i> Logo Kemenag (Kiri)</h3>
                         <form onsubmit="saveLogo(event, 'logo')" class="space-y-4">
                             <div class="flex items-start gap-4">
-                                <div class="w-20 h-20 bg-white rounded-lg p-2 flex items-center justify-center shrink-0 border-2 border-yellow-400">
-                                    <img id="current_logo_preview" src="./logo.png" onerror="this.src='https://placehold.co/100x100/166534/FFFFFF?text=Logo1'" class="max-w-full max-h-full object-contain">
-                                </div>
-                                <div class="flex-1">
-                                    <label class="block text-sm text-green-100 mb-1">Pilih File Baru (PNG/JPG)</label>
-                                    <input type="file" id="new_logo_file" accept="image/*" class="glass-input w-full p-2 rounded-lg text-sm" required>
-                                </div>
+                                <div class="w-20 h-20 bg-white rounded-lg p-2 flex items-center justify-center shrink-0 border-2 border-yellow-400"><img id="current_logo_preview" src="./logo.png" onerror="this.src='https://placehold.co/100x100/166534/FFFFFF?text=Logo1'" class="max-w-full max-h-full object-contain"></div>
+                                <div class="flex-1"><label class="block text-sm text-green-100 mb-1">Pilih File Baru (PNG/JPG)</label><input type="file" id="new_logo_file" accept="image/*" class="glass-input w-full p-2 rounded-lg text-sm" required></div>
                             </div>
-                            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition shadow w-full md:w-auto">
-                                <i class="fas fa-upload mr-1"></i> Terapkan Logo Kiri
-                            </button>
+                            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition shadow w-full md:w-auto"><i class="fas fa-upload mr-1"></i> Terapkan Logo Kiri</button>
                         </form>
                     </div>
 
                     <!-- Upload Logo Kanan -->
                     <div class="bg-black/20 p-6 rounded-xl border border-white/10 shadow-lg">
-                        <h3 class="text-lg font-semibold text-white flex items-center gap-2 mb-4">
-                            <i class="fas fa-image text-yellow-400"></i> Logo Tambahan (Kanan)
-                        </h3>
+                        <h3 class="text-lg font-semibold text-white flex items-center gap-2 mb-4"><i class="fas fa-image text-yellow-400"></i> Logo Tambahan (Kanan)</h3>
                         <form onsubmit="saveLogo(event, 'logo2')" class="space-y-4">
                             <div class="flex items-start gap-4">
-                                <div class="w-20 h-20 bg-white rounded-lg p-2 flex items-center justify-center shrink-0 border-2 border-yellow-400">
-                                    <img id="current_logo2_preview" src="" onerror="this.style.display='none'" onload="this.style.display='block'" class="max-w-full max-h-full object-contain">
-                                </div>
-                                <div class="flex-1">
-                                    <label class="block text-sm text-green-100 mb-1">Pilih File Baru (Boleh Kosong)</label>
-                                    <input type="file" id="new_logo2_file" accept="image/*" class="glass-input w-full p-2 rounded-lg text-sm" required>
-                                </div>
+                                <div class="w-20 h-20 bg-white rounded-lg p-2 flex items-center justify-center shrink-0 border-2 border-yellow-400"><img id="current_logo2_preview" src="" onerror="this.style.display='none'" onload="this.style.display='block'" class="max-w-full max-h-full object-contain"></div>
+                                <div class="flex-1"><label class="block text-sm text-green-100 mb-1">Pilih File Baru (Boleh Kosong)</label><input type="file" id="new_logo2_file" accept="image/*" class="glass-input w-full p-2 rounded-lg text-sm" required></div>
                             </div>
-                            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition shadow w-full md:w-auto">
-                                <i class="fas fa-upload mr-1"></i> Terapkan Logo Kanan
-                            </button>
+                            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition shadow w-full md:w-auto"><i class="fas fa-upload mr-1"></i> Terapkan Logo Kanan</button>
+                        </form>
+                    </div>
+                    
+                    <!-- Ubah Password -->
+                    <div class="bg-black/20 p-6 rounded-xl border border-white/10 shadow-lg md:col-span-2">
+                        <h3 class="text-lg font-semibold text-white flex items-center gap-2 mb-4"><i class="fas fa-key text-yellow-400"></i> Ubah Password Admin</h3>
+                        <form onsubmit="savePassword(event)" class="space-y-4 max-w-sm">
+                            <div><input type="password" id="new_password" class="glass-input w-full p-2.5 rounded-lg" placeholder="Masukkan password baru" required></div>
+                            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition shadow w-full"><i class="fas fa-save mr-1"></i> Simpan Password</button>
                         </form>
                     </div>
                 </div>
@@ -346,8 +280,8 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div><label class="block text-sm font-medium mb-1">Nama Lengkap</label><input type="text" id="f_nama" class="glass-input w-full p-2.5 rounded-lg" required></div>
                     <div><label class="block text-sm font-medium mb-1">Asal Madrasah</label><input type="text" id="f_madrasah" class="glass-input w-full p-2.5 rounded-lg" required></div>
-                    <div><label class="block text-sm font-medium mb-1 text-yellow-300">Username AKG</label><input type="text" id="f_user" class="glass-input w-full p-2.5 rounded-lg border-yellow-500/50" required></div>
-                    <div><label class="block text-sm font-medium mb-1 text-yellow-300">Password AKG</label><input type="text" id="f_pass" class="glass-input w-full p-2.5 rounded-lg border-yellow-500/50" required></div>
+                    <div><label class="block text-sm font-medium mb-1 text-yellow-300">Username</label><input type="text" id="f_user" class="glass-input w-full p-2.5 rounded-lg border-yellow-500/50" required></div>
+                    <div><label class="block text-sm font-medium mb-1 text-yellow-300">Password</label><input type="text" id="f_pass" class="glass-input w-full p-2.5 rounded-lg border-yellow-500/50" required></div>
                     <div><label class="block text-sm font-medium mb-1">Tanggal AKG</label><input type="date" id="f_tanggal" class="glass-input w-full p-2.5 rounded-lg" required></div>
                     <div><label class="block text-sm font-medium mb-1">Mata Pelajaran (Mapel)</label><input type="text" id="f_mapel" class="glass-input w-full p-2.5 rounded-lg" required></div>
                     <div><label class="block text-sm font-medium mb-1">Sesi / Ruang</label><input type="text" id="f_sesi" class="glass-input w-full p-2.5 rounded-lg" required></div>
@@ -367,31 +301,27 @@
 
                 <div class="flex justify-end gap-3 mt-8 border-t border-white/20 pt-4">
                     <button type="button" onclick="closeFormModal()" class="px-5 py-2.5 rounded-lg bg-gray-600 hover:bg-gray-700 text-white font-medium transition">Batal</button>
-                    <button type="submit" class="px-5 py-2.5 rounded-lg bg-green-500 hover:bg-green-600 text-white font-bold transition shadow-lg flex items-center gap-2">
-                        <i class="fas fa-save"></i> Simpan Data
-                    </button>
+                    <button type="submit" class="px-5 py-2.5 rounded-lg bg-green-500 hover:bg-green-600 text-white font-bold transition shadow-lg flex items-center gap-2"><i class="fas fa-save"></i> Simpan Data</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Modal Konfirmasi -->
+    <!-- Modal Konfirmasi Hapus -->
     <div id="confirmModal" class="modal-overlay fixed inset-0 bg-black/60 backdrop-blur-sm hidden flex justify-center items-center p-4">
         <div class="glass-card w-full max-w-sm p-6 text-center border-t-4 border-red-500">
             <i class="fas fa-exclamation-triangle text-5xl text-red-500 mb-4 animate-bounce"></i>
             <h3 class="text-xl font-bold mb-2">Konfirmasi Hapus</h3>
             <p class="text-gray-200 mb-6 text-sm">Apakah Anda yakin ingin menghapus data peserta ini?</p>
             <div class="flex justify-center gap-3">
-                <button onclick="closeConfirmModal()" class="px-4 py-2 rounded-lg bg-gray-600 hover:bg-gray-700 text-white font-medium transition">Batal</button>
-                <button id="btnConfirmDelete" class="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white font-bold transition shadow-lg">Ya, Hapus</button>
+                <button onclick="closeConfirmModal()" class="px-4 py-2 rounded-lg bg-gray-600 text-white font-medium">Batal</button>
+                <button id="btnConfirmDelete" class="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white font-bold">Ya, Hapus</button>
             </div>
         </div>
     </div>
 
-    <!-- Modal Kartu & Template Ekspor -->
     <div id="cardModal" class="modal-overlay fixed inset-0 bg-black/80 backdrop-blur-md hidden flex justify-center items-center p-4">
         <div class="w-full max-w-[850px] relative flex flex-col items-center">
-            
             <button onclick="closeCardModal()" class="absolute -top-12 right-0 text-gray-300 hover:text-red-400 text-3xl transition"><i class="fas fa-times-circle"></i></button>
             
             <div class="glass w-full max-w-[800px] p-4 rounded-t-xl flex flex-col sm:flex-row justify-between items-center gap-4 border-b-0 shadow-lg z-10 relative">
@@ -404,74 +334,69 @@
 
             <div id="card-export-area" class="w-full overflow-x-auto flex justify-center bg-black/40 p-6 rounded-b-xl border border-white/20">
                 
-                <!-- TEMPLATE KARTU FIXED -->
+                <!-- TEMPLATE KARTU FIXED (Dinamis Warna) -->
                 <div id="kartu-template">
                     
-                    <div class="kop-surat-bg">
-                        <div class="kop-logo-box">
-                            <img id="c_logo_kemenag" src="./logo.png" onerror="this.src='https://placehold.co/75x75/ffffff/166534?text=Kemenag'">
-                        </div>
-                        
+                    <div id="c_kop_bg">
+                        <div class="kop-logo-box"><img id="c_logo_kemenag" src="./logo.png" onerror="this.src='https://placehold.co/75x75/ffffff/166534?text=Kemenag'"></div>
                         <div class="flex-1 text-center px-4" style="z-index: 20;">
                             <h2 id="c_kop_1" class="text-[20px] font-extrabold uppercase tracking-widest text-white drop-shadow-md m-0 leading-tight"></h2>
                             <h3 id="c_kop_2" class="text-[14px] font-bold text-yellow-300 mt-1 uppercase m-0 leading-tight"></h3>
                             <p id="c_kop_3" class="text-[12px] font-medium mt-1 opacity-90 m-0 leading-tight"></p>
                         </div>
-                        
                         <div class="kop-logo-box" id="c_logo_2_container" style="background:transparent; border:none;">
                             <img id="c_logo_2" src="" onerror="this.style.display='none'" onload="this.style.display='block'">
                         </div>
                     </div>
 
                     <div style="display: flex; height: 342px; padding: 25px; box-sizing: border-box; position: relative; z-index: 10;">
-                        
-                        <!-- Kiri: Biodata & Kredensial Menggunakan Inline CSS untuk Presisi Mutlak -->
+                        <!-- Kiri: Biodata -->
                         <div style="flex: 1; padding-right: 20px;">
-                            <table style="width: 100%; font-size: 15px; color: #14532d; border-collapse: collapse;">
+                            <table style="width: 100%; font-size: 15px; color: #1f2937; border-collapse: collapse;">
                                 <tbody>
                                     <tr>
                                         <td style="width: 140px; font-weight: bold; color: #374151; padding: 6px 0;">Nama Peserta</td>
                                         <td style="width: 15px; font-weight: bold; color: #6b7280; padding: 6px 0;">:</td>
-                                        <td style="font-weight: bold; color: #166534; padding: 6px 0; border-bottom: 1px solid #bbf7d0; text-transform: uppercase; font-size: 1.125rem; letter-spacing: 0.025em;" id="c_nama"></td>
+                                        <!-- Warna c_nama dinamis via JS -->
+                                        <td style="font-weight: bold; color: #166534; padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.1); text-transform: uppercase; font-size: 1.125rem; letter-spacing: 0.025em;" id="c_nama"></td>
                                     </tr>
                                     <tr>
                                         <td style="font-weight: bold; color: #374151; padding: 6px 0;">Asal Madrasah</td>
                                         <td style="font-weight: bold; color: #6b7280; padding: 6px 0;">:</td>
-                                        <td style="font-weight: bold; padding: 6px 0; border-bottom: 1px solid #bbf7d0;" id="c_madrasah"></td>
+                                        <td style="font-weight: bold; padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.1);" id="c_madrasah"></td>
                                     </tr>
                                     <tr>
                                         <td style="font-weight: bold; color: #374151; padding: 6px 0;">Mata Pelajaran</td>
                                         <td style="font-weight: bold; color: #6b7280; padding: 6px 0;">:</td>
-                                        <td style="font-weight: bold; padding: 6px 0; border-bottom: 1px solid #bbf7d0;" id="c_mapel"></td>
+                                        <td style="font-weight: bold; padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.1);" id="c_mapel"></td>
                                     </tr>
                                     <tr>
                                         <td style="font-weight: bold; color: #374151; padding: 6px 0;">Tanggal AKG</td>
                                         <td style="font-weight: bold; color: #6b7280; padding: 6px 0;">:</td>
-                                        <td style="font-weight: bold; padding: 6px 0; border-bottom: 1px solid #bbf7d0;" id="c_tanggal"></td>
+                                        <td style="font-weight: bold; padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.1);" id="c_tanggal"></td>
                                     </tr>
                                     <tr>
                                         <td style="font-weight: bold; color: #374151; padding: 6px 0;">Sesi / Jam</td>
                                         <td style="font-weight: bold; color: #6b7280; padding: 6px 0;">:</td>
-                                        <td style="font-weight: bold; padding: 6px 0; border-bottom: 1px solid #bbf7d0;">
+                                        <td style="font-weight: bold; padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.1);">
                                             <span id="c_sesi"></span> <span style="margin: 0 4px; color: #9ca3af;">|</span> <span id="c_jam" style="color: #1d4ed8;"></span>
                                         </td>
                                     </tr>
-                                    
-                                    <!-- Jarak Khusus agar Layout Pas -->
-                                    <tr><td colspan="3" style="height: 12px;"></td></tr>
-                                    
-                                    <!-- Username & Password -->
+                                    <!-- Ruang Spacer -->
+                                    <tr><td colspan="3" style="height: 12px; border:none; padding:0;"></td></tr>
+                                    <!-- Kredensial Inline (Anti Clipping) -->
                                     <tr>
-                                        <td style="font-weight: 800; color: #dc2626; padding: 6px 0; text-transform: uppercase; font-size: 14px;"><i class="fas fa-user" style="margin-right: 4px; font-size: 12px;"></i> Username</td>
+                                        <!-- Warna icon kredensial akan dibuat dinamis jika perlu, tapi kita pakai standar merah saja atau biarkan -->
+                                        <td style="font-weight: 800; padding: 6px 0; font-size: 14px;"><span id="c_icon_user" style="color: #dc2626;"><i class="fas fa-user"></i> USERNAME</span></td>
                                         <td style="font-weight: bold; color: #6b7280; padding: 6px 0;">:</td>
-                                        <td style="padding: 6px 0; border-bottom: 1px solid #bbf7d0;">
+                                        <td style="padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.1);">
                                             <span id="c_user" style="font-family: monospace; font-size: 1.125rem; font-weight: bold; color: #111827; letter-spacing: 0.05em;"></span>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style="font-weight: 800; color: #dc2626; padding: 6px 0; text-transform: uppercase; font-size: 14px;"><i class="fas fa-key" style="margin-right: 4px; font-size: 12px;"></i> Password</td>
+                                        <td style="font-weight: 800; padding: 6px 0; font-size: 14px;"><span id="c_icon_pass" style="color: #dc2626;"><i class="fas fa-key"></i> PASSWORD</span></td>
                                         <td style="font-weight: bold; color: #6b7280; padding: 6px 0;">:</td>
-                                        <td style="padding: 6px 0; border-bottom: 1px solid #bbf7d0;">
+                                        <td style="padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.1);">
                                             <span id="c_pass" style="font-family: monospace; font-size: 1.125rem; font-weight: bold; color: #111827; letter-spacing: 0.05em;"></span>
                                         </td>
                                     </tr>
@@ -480,8 +405,7 @@
                         </div>
 
                         <!-- Kanan: Foto & QR Code -->
-                        <div style="width: 160px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; border-left: 2px solid rgba(134, 239, 172, 0.5); padding-left: 20px; box-sizing: border-box;">
-                            
+                        <div style="width: 160px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; border-left: 2px solid rgba(0,0,0,0.1); padding-left: 20px; box-sizing: border-box;">
                             <!-- Foto Fixed Size -->
                             <div style="width: 110px; height: 150px; border: 3px solid white; background-color: #e5e7eb; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); overflow: hidden; display: flex; justify-content: center; align-items: center; position: relative;">
                                 <img id="c_foto" src="" style="width: 100%; height: 100%; object-fit: cover; display: none;">
@@ -496,8 +420,8 @@
                             </div>
                         </div>
                     </div>
-
-                    <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 8px; background: linear-gradient(to right, #facc15, #fef08a, #facc15);"></div>
+                    <!-- Garis Bawah Dinamis -->
+                    <div id="c_bottom_bar" style="position: absolute; bottom: 0; left: 0; width: 100%; height: 8px; background: linear-gradient(to right, #facc15, #fef08a, #facc15);"></div>
                 </div>
             </div>
         </div>
@@ -506,39 +430,42 @@
     <script>
         /**
          ============================================================
-         WAJIB DIUBAH SEBELUM DEPLOY KE GITHUB PAGES!
-         Ganti URL di bawah dengan URL Web App Apps Script Anda.
+         WAJIB DIUBAH!
+         Ganti URL di bawah dengan URL Web App Anda setelah deploy.
          ============================================================
         */
         const APP_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyacO-lpvYPGXTHj0rRZTl6h6tey4SOGQUpWcTCb5ik2GYzwUPbT1l4wTnJUN9YPQ_kxQ/exec";
         
         let appSettings = { 
             logoUrl: "./logo.png", logo2Url: "",
-            kop1: "Kementerian Agama RI", kop2: "Kartu Peserta Asesmen Kompetensi Guru (AKG)", kop3: "Tahun Pelaksanaan 2026"
+            kop1: "Kementerian Agama RI", kop2: "Kartu Peserta Asesmen Kompetensi Guru (AKG)", kop3: "Tahun Pelaksanaan 2026",
+            theme: "hijau" // Default tema
         };
+        
+        // Objek Warna Tema
+        const cardThemes = {
+            hijau: { primary: "#166534", grad1: "#14532d", grad2: "#166534", accent: "#facc15", bgPattern: "rgba(22, 101, 52, 0.05)" },
+            biru: { primary: "#1d4ed8", grad1: "#1e3a8a", grad2: "#1d4ed8", accent: "#fbbf24", bgPattern: "rgba(29, 78, 216, 0.05)" },
+            merah: { primary: "#b91c1c", grad1: "#7f1d1d", grad2: "#b91c1c", accent: "#facc15", bgPattern: "rgba(185, 28, 28, 0.05)" },
+            ungu: { primary: "#6d28d9", grad1: "#4c1d95", grad2: "#6d28d9", accent: "#fbcfe8", bgPattern: "rgba(109, 40, 217, 0.05)" }
+        };
+
         let pesertaData = [], currentDeleteId = null, currentEditId = null;
 
-        // Formatter Tanggal Wajib
         function formatUntukInput(dateString) {
             if (!dateString) return '';
             try {
-                let d = new Date(dateString);
-                if (isNaN(d.getTime())) return dateString;
-                let localDate = new Date(d.getTime() - (d.getTimezoneOffset() * 60000));
-                return localDate.toISOString().split('T')[0];
+                let d = new Date(dateString); if (isNaN(d.getTime())) return dateString;
+                return new Date(d.getTime() - (d.getTimezoneOffset() * 60000)).toISOString().split('T')[0];
             } catch(e) { return dateString; }
         }
 
         function formatUntukTampil(dateString) {
             if (!dateString) return '';
             try {
-                let d = new Date(dateString);
-                if (isNaN(d.getTime())) return dateString;
-                let localDate = new Date(d.getTime() - (d.getTimezoneOffset() * 60000));
-                let dd = String(localDate.getDate()).padStart(2, '0');
-                let mm = String(localDate.getMonth() + 1).padStart(2, '0');
-                let yyyy = localDate.getFullYear();
-                return `${dd}-${mm}-${yyyy}`;
+                let d = new Date(dateString); if (isNaN(d.getTime())) return dateString;
+                let ld = new Date(d.getTime() - (d.getTimezoneOffset() * 60000));
+                return String(ld.getDate()).padStart(2, '0') + '-' + String(ld.getMonth() + 1).padStart(2, '0') + '-' + ld.getFullYear();
             } catch(e) { return dateString; }
         }
 
@@ -548,7 +475,7 @@
             try {
                 const response = await fetch(APP_SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: action, data: payload }) });
                 return await response.json();
-            } catch (error) { return { success: false, message: 'Gagal terhubung ke server. Periksa URL Apps Script Anda.' }; }
+            } catch (error) { return { success: false, message: 'Gagal terhubung ke server. Pastikan URL benar.' }; }
         }
 
         window.onload = function() { checkSession(); };
@@ -570,31 +497,19 @@
 
         async function checkSession() {
             const token = sessionStorage.getItem('akg_session_token');
-            if(token) {
-                document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('app-screen').style.display = 'flex';
-                await fetchInitialData();
-            } else {
-                document.getElementById('app-screen').style.display = 'none';
-                document.getElementById('login-screen').style.display = 'flex';
-            }
+            if(token) { document.getElementById('login-screen').style.display = 'none'; document.getElementById('app-screen').style.display = 'flex'; await fetchInitialData(); } 
+            else { document.getElementById('app-screen').style.display = 'none'; document.getElementById('login-screen').style.display = 'flex'; }
         }
 
         async function handleLogin(e) {
             e.preventDefault(); showLoading('MEMVERIFIKASI...');
             const res = await apiCall('login', { username: document.getElementById('username').value, password: document.getElementById('password').value });
             hideLoading();
-            if (res.success) {
-                sessionStorage.setItem('akg_session_token', res.data.token);
-                document.getElementById('login-screen').style.display = 'none'; document.getElementById('app-screen').style.display = 'flex';
-                fetchInitialData();
-            } else { showToast('error', res.message); }
+            if (res.success) { sessionStorage.setItem('akg_session_token', res.data.token); checkSession(); } 
+            else showToast('error', res.message);
         }
 
-        async function handleLogout() {
-            showLoading('KELUAR...'); await apiCall('logout');
-            sessionStorage.removeItem('akg_session_token'); hideLoading(); location.reload();
-        }
+        async function handleLogout() { showLoading('KELUAR...'); await apiCall('logout'); sessionStorage.removeItem('akg_session_token'); location.reload(); }
 
         async function fetchInitialData() {
             showLoading('MEMUAT DATA...'); const res = await apiCall('get_data'); hideLoading();
@@ -606,6 +521,7 @@
                     if(res.data.settings.kop_1) appSettings.kop1 = res.data.settings.kop_1;
                     if(res.data.settings.kop_2) appSettings.kop2 = res.data.settings.kop_2;
                     if(res.data.settings.kop_3) appSettings.kop3 = res.data.settings.kop_3;
+                    if(res.data.settings.theme) appSettings.theme = res.data.settings.theme;
                 }
                 updateUIWithSettings(); renderTable();
             } else { if(res.message.includes('Akses ditolak')) handleLogout(); else showToast('error', res.message); }
@@ -617,6 +533,7 @@
             document.getElementById('set_kop1').value = appSettings.kop1;
             document.getElementById('set_kop2').value = appSettings.kop2;
             document.getElementById('set_kop3').value = appSettings.kop3;
+            document.getElementById('set_theme').value = appSettings.theme;
         }
 
         function switchTab(tabName) {
@@ -627,39 +544,32 @@
             if (tabName === 'peserta') renderTable();
         }
 
-        async function savePassword(e) {
-            e.preventDefault(); const v = document.getElementById('new_password').value;
-            if(v.length < 5) return showToast('error', 'Password minimal 5 karakter!');
-            showLoading(); const res = await apiCall('save_settings', { settingType: 'password', value: v }); hideLoading();
-            if(res.success) { e.target.reset(); showToast('success', res.message); } else showToast('error', res.message);
-        }
-
+        // Pengaturan Form
+        async function savePassword(e) { e.preventDefault(); const v = document.getElementById('new_password').value; showLoading(); const res = await apiCall('save_settings', { settingType: 'password', value: v }); hideLoading(); res.success ? (e.target.reset(), showToast('success', res.message)) : showToast('error', res.message); }
+        
         async function saveLogo(e, type) {
             e.preventDefault(); const fileInput = document.getElementById(type === 'logo' ? 'new_logo_file' : 'new_logo2_file');
             if (fileInput.files && fileInput.files[0]) {
-                showLoading('MENGUNGGAH...'); const reader = new FileReader();
-                reader.onload = async function(evt) {
-                    const res = await apiCall('save_settings', { settingType: type, fileName: fileInput.files[0].name, base64Data: evt.target.result });
-                    hideLoading();
-                    if(res.success) {
-                        if(type === 'logo') appSettings.logoUrl = res.data.logoUrl; else appSettings.logo2Url = res.data.logo2Url;
-                        updateUIWithSettings(); e.target.reset(); showToast('success', res.message);
-                    } else showToast('error', res.message);
+                showLoading('MENGUNGGAH...'); const r = new FileReader();
+                r.onload = async (evt) => {
+                    const res = await apiCall('save_settings', { settingType: type, fileName: fileInput.files[0].name, base64Data: evt.target.result }); hideLoading();
+                    if(res.success) { type === 'logo' ? appSettings.logoUrl = res.data.logoUrl : appSettings.logo2Url = res.data.logo2Url; updateUIWithSettings(); e.target.reset(); showToast('success', res.message); } else showToast('error', res.message);
                 };
-                reader.readAsDataURL(fileInput.files[0]);
+                r.readAsDataURL(fileInput.files[0]);
             }
         }
 
         async function saveKop(e) {
             e.preventDefault(); showLoading();
-            const res = await apiCall('save_settings', { 
-                settingType: 'kop', kop1: document.getElementById('set_kop1').value, kop2: document.getElementById('set_kop2').value, kop3: document.getElementById('set_kop3').value
-            });
-            hideLoading();
-            if(res.success) {
-                appSettings.kop1 = document.getElementById('set_kop1').value; appSettings.kop2 = document.getElementById('set_kop2').value; appSettings.kop3 = document.getElementById('set_kop3').value;
-                showToast('success', res.message);
-            } else showToast('error', res.message);
+            const res = await apiCall('save_settings', { settingType: 'kop', kop1: document.getElementById('set_kop1').value, kop2: document.getElementById('set_kop2').value, kop3: document.getElementById('set_kop3').value }); hideLoading();
+            if(res.success) { appSettings.kop1 = document.getElementById('set_kop1').value; appSettings.kop2 = document.getElementById('set_kop2').value; appSettings.kop3 = document.getElementById('set_kop3').value; showToast('success', res.message); } else showToast('error', res.message);
+        }
+
+        async function saveTheme(e) {
+            e.preventDefault(); showLoading();
+            const val = document.getElementById('set_theme').value;
+            const res = await apiCall('save_settings', { settingType: 'theme', theme: val }); hideLoading();
+            if(res.success) { appSettings.theme = val; showToast('success', res.message); } else showToast('error', res.message);
         }
 
         function renderTable() {
@@ -685,10 +595,7 @@
 
         function previewUploadFoto(input) {
             const preview = document.getElementById('f_foto_preview');
-            if (input.files && input.files[0]) {
-                const r = new FileReader(); r.onload = (e) => { preview.src = e.target.result; preview.classList.remove('hidden'); };
-                r.readAsDataURL(input.files[0]);
-            } else { preview.src = ''; preview.classList.add('hidden'); }
+            if (input.files && input.files[0]) { const r = new FileReader(); r.onload = (e) => { preview.src = e.target.result; preview.classList.remove('hidden'); }; r.readAsDataURL(input.files[0]); } else { preview.src = ''; preview.classList.add('hidden'); }
         }
 
         function openFormModal(isEdit = false) {
@@ -699,8 +606,7 @@
         function closeFormModal() { document.getElementById('formModal').style.display = 'none'; }
 
         function editPeserta(id) {
-            const data = pesertaData.find(d => String(d.id) === String(id)); if (!data) return;
-            currentEditId = id;
+            const data = pesertaData.find(d => String(d.id) === String(id)); if (!data) return; currentEditId = id;
             document.getElementById('f_nama').value = data.nama; document.getElementById('f_madrasah').value = data.madrasah;
             document.getElementById('f_user').value = data.user; document.getElementById('f_pass').value = data.pass;
             document.getElementById('f_tanggal').value = formatUntukInput(data.tanggal); document.getElementById('f_sesi').value = data.sesi;
@@ -712,64 +618,75 @@
 
         async function savePeserta(e) {
             e.preventDefault();
-            const payload = {
-                id: currentEditId || "", nama: document.getElementById('f_nama').value, madrasah: document.getElementById('f_madrasah').value,
-                user: document.getElementById('f_user').value, pass: document.getElementById('f_pass').value, tanggal: document.getElementById('f_tanggal').value,
-                sesi: document.getElementById('f_sesi').value, jam: document.getElementById('f_jam').value, mapel: document.getElementById('f_mapel').value,
-            };
+            const payload = { id: currentEditId || "", nama: document.getElementById('f_nama').value, madrasah: document.getElementById('f_madrasah').value, user: document.getElementById('f_user').value, pass: document.getElementById('f_pass').value, tanggal: document.getElementById('f_tanggal').value, sesi: document.getElementById('f_sesi').value, jam: document.getElementById('f_jam').value, mapel: document.getElementById('f_mapel').value };
             const fileInput = document.getElementById('f_foto');
-            const proceed = async (b64, fname) => {
-                if(b64) { payload.newFotoBase64 = b64; payload.newFotoName = fname; }
-                showLoading(); const res = await apiCall('save_peserta', payload); hideLoading();
-                if (res.success) { closeFormModal(); showToast('success', res.message); fetchInitialData(); } else showToast('error', res.message);
-            };
-            if (fileInput.files && fileInput.files[0]) {
-                const r = new FileReader(); r.onload = (evt) => proceed(evt.target.result, fileInput.files[0].name); r.readAsDataURL(fileInput.files[0]);
-            } else proceed(null, null);
+            const proceed = async (b64, fname) => { if(b64) { payload.newFotoBase64 = b64; payload.newFotoName = fname; } showLoading(); const res = await apiCall('save_peserta', payload); hideLoading(); if (res.success) { closeFormModal(); showToast('success', res.message); fetchInitialData(); } else showToast('error', res.message); };
+            if (fileInput.files && fileInput.files[0]) { const r = new FileReader(); r.onload = (evt) => proceed(evt.target.result, fileInput.files[0].name); r.readAsDataURL(fileInput.files[0]); } else proceed(null, null);
         }
 
         function requestDelete(id) { currentDeleteId = id; document.getElementById('confirmModal').style.display = 'flex'; }
         function closeConfirmModal() { document.getElementById('confirmModal').style.display = 'none'; currentDeleteId = null; }
-        document.getElementById('btnConfirmDelete').addEventListener('click', async () => {
-            if (currentDeleteId) {
-                showLoading(); const res = await apiCall('delete_peserta', { id: currentDeleteId }); hideLoading(); closeConfirmModal();
-                if(res.success) { showToast('success', res.message); fetchInitialData(); } else showToast('error', res.message);
-            }
-        });
+        document.getElementById('btnConfirmDelete').addEventListener('click', async () => { if (currentDeleteId) { showLoading(); const res = await apiCall('delete_peserta', { id: currentDeleteId }); hideLoading(); closeConfirmModal(); res.success ? (showToast('success', res.message), fetchInitialData()) : showToast('error', res.message); } });
 
         let currentPesertaName = "Kartu_AKG";
+
+        // Menerapkan Tema ke DOM Kartu
+        function applyCardTheme(themeKey) {
+            const t = cardThemes[themeKey] || cardThemes.hijau; // Fallback ke hijau
+            
+            document.getElementById('kartu-template').style.borderColor = t.primary;
+            document.getElementById('kartu-template').style.backgroundImage = `linear-gradient(to right, ${t.bgPattern} 1px, transparent 1px), linear-gradient(to bottom, ${t.bgPattern} 1px, transparent 1px)`;
+            document.getElementById('kartu-template').style.boxShadow = `inset 0 0 0 2px ${t.accent}`;
+            
+            document.getElementById('c_kop_bg').style.background = `linear-gradient(to right, ${t.grad1}, ${t.grad2}, ${t.grad1})`;
+            document.getElementById('c_kop_bg').style.borderBottom = `4px solid ${t.accent}`;
+            
+            document.getElementById('c_kop_2').style.color = t.accent;
+            document.getElementById('c_nama').style.color = t.primary;
+            document.getElementById('qrcode-container').style.border = `2px solid ${t.primary}`;
+            
+            // Icon Credential Colors
+            document.getElementById('c_icon_user').style.color = t.primary;
+            document.getElementById('c_icon_pass').style.color = t.primary;
+            
+            document.getElementById('c_bottom_bar').style.background = `linear-gradient(to right, ${t.accent}, #ffffff, ${t.accent})`;
+            
+            return t.primary; // Mengembalikan warna primary untuk digunakan di QR Code
+        }
 
         function openCardPreview(id) {
             const data = pesertaData.find(d => String(d.id) === String(id)); if (!data) return;
             currentPesertaName = `Kartu_AKG_${data.nama.replace(/\s+/g, '_')}`;
 
-            document.getElementById('c_logo_kemenag').src = appSettings.logoUrl || './logo.png';
-            if(appSettings.logo2Url) {
-                document.getElementById('c_logo_2').src = appSettings.logo2Url; document.getElementById('c_logo_2').style.display = 'block';
-                document.getElementById('c_logo_2_container').style.border = '2px solid #facc15'; document.getElementById('c_logo_2_container').style.background = 'white';
-            } else {
-                document.getElementById('c_logo_2').style.display = 'none'; document.getElementById('c_logo_2_container').style.border = 'none'; document.getElementById('c_logo_2_container').style.background = 'transparent';
-            }
-            
+            // Set Data Teks
             document.getElementById('c_kop_1').innerText = appSettings.kop1; document.getElementById('c_kop_2').innerText = appSettings.kop2; document.getElementById('c_kop_3').innerText = appSettings.kop3;
-
             document.getElementById('c_nama').innerText = data.nama; document.getElementById('c_madrasah').innerText = data.madrasah;
             document.getElementById('c_mapel').innerText = data.mapel; document.getElementById('c_tanggal').innerText = formatUntukTampil(data.tanggal);
             document.getElementById('c_sesi').innerText = data.sesi; document.getElementById('c_jam').innerText = data.jam;
             document.getElementById('c_user').innerText = data.user; document.getElementById('c_pass').innerText = data.pass;
 
-            const imgEl = document.getElementById('c_foto');
-            if (data.fotoUrl) { imgEl.src = data.fotoUrl; imgEl.style.display = 'block'; document.getElementById('c_foto_icon').style.display = 'none'; } 
-            else { imgEl.style.display = 'none'; document.getElementById('c_foto_icon').style.display = 'block'; }
+            // Set Logo
+            document.getElementById('c_logo_kemenag').src = appSettings.logoUrl || './logo.png';
+            if(appSettings.logo2Url) { document.getElementById('c_logo_2').src = appSettings.logo2Url; document.getElementById('c_logo_2').style.display = 'block'; document.getElementById('c_logo_2_container').style.border = '2px solid #facc15'; document.getElementById('c_logo_2_container').style.background = 'white'; } 
+            else { document.getElementById('c_logo_2').style.display = 'none'; document.getElementById('c_logo_2_container').style.border = 'none'; document.getElementById('c_logo_2_container').style.background = 'transparent'; }
 
+            // Set Foto
+            const imgEl = document.getElementById('c_foto');
+            if (data.fotoUrl) { imgEl.src = data.fotoUrl; imgEl.style.display = 'block'; document.getElementById('c_foto_icon').style.display = 'none'; } else { imgEl.style.display = 'none'; document.getElementById('c_foto_icon').style.display = 'block'; }
+
+            // Terapkan Warna Tema
+            const qrColor = applyCardTheme(appSettings.theme);
+
+            // Buat QR Code dengan warna Tema
             const qrContainer = document.getElementById('qrcode-container'); qrContainer.innerHTML = ''; 
-            new QRCode(qrContainer, { text: JSON.stringify({ N: data.nama, U: data.user, P: data.pass }), width: 90, height: 90, colorDark : "#166534", colorLight : "#ffffff", correctLevel : QRCode.CorrectLevel.M });
+            new QRCode(qrContainer, { text: JSON.stringify({ N: data.nama, U: data.user, P: data.pass }), width: 90, height: 90, colorDark : qrColor, colorLight : "#ffffff", correctLevel : QRCode.CorrectLevel.M });
 
             document.getElementById('cardModal').style.display = 'flex';
         }
 
         function closeCardModal() { document.getElementById('cardModal').style.display = 'none'; }
 
+        // Ekspor menggunakan jsPDF & html2canvas (Presisi Tinggi)
         function exportToPNG() {
             showLoading('MENGEKSPOR PNG...');
             setTimeout(() => {
